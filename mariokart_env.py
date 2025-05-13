@@ -7,7 +7,7 @@ import numpy as np
 class MarioKartEnv(gym.Env):
     def __init__(self, region=None):
         super(MarioKartEnv, self).__init__()
-        self.action_space = spaces.Discrete(4)  # [accelerate, break, turn left, turn right]
+        self.action_space = spaces.Discrete(5)  # [drive, break, turn left, turn right, wheelie]
         self.observation_space = spaces.Box(low=0, high=255, shape=(1080, 1920, 3), dtype=np.uint8)
 
     def reset(self):

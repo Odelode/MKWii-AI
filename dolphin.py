@@ -10,7 +10,7 @@ class DolphinController:
         print("Connected to Dolphin Emulator")
 
     def select_emulator_window(self):
-        window = gw.getWindowsWithTitle('Dolphin 2412 |')[0]
+        window = gw.getWindowsWithTitle('Dolphin 2412 | JIT64 DC | Direct3D 11 | HLE | Mario Kart Wii (RMCE01)')[0]
         window.activate()
         print("Dolphin Emulator window selected")
 
