@@ -1,0 +1,7 @@
+﻿# Write pip install -r requirements.txt in the terminal to install the packages needed for this project.
+opencv-python
+numpy
+gym
+pydirectinput
+pygetwindow
+pywin32
