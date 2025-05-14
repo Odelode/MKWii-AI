@@ -5,3 +5,4 @@ gym
 pydirectinput
 pygetwindow
 pywin32
+torch

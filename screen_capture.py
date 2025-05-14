@@ -42,7 +42,7 @@ def capture_window(window_title):
     return cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) # cv2.COLOR_BGRA2BGR for with color
 
 if __name__ == "__main__":
-    window_title = "Dolphin 2412 | JIT64 DC | Direct3D 11 | HLE | Mario Kart Wii (RMCE01)" # If you update the emulator you're going to have to update the title.
+    window_title = "Dolphin 2412 | JIT64 DC | Direct3D 11 | HLE | Mario Kart Wii (RMCP01)" # If you update the emulator you're going to have to update the title.
     target_fps = 24 # Set the target FPS for the capture, lower is better for the AI to quickly process the frames.
     frame_duration = 1.0 / target_fps
     try:

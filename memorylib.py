@@ -5,8 +5,9 @@ from ctypes import wintypes, sizeof, addressof, POINTER, pointer
 from ctypes.wintypes import DWORD, ULONG, LONG, WORD
 from multiprocessing import shared_memory
 '''
-This is not my code this is a library found at https://github.com/RenolY2/dolphin-memory-lib, 
-it wasn't available in PyPI so I had to add it manually.
+This is not my code this is a library found at https://github.com/RenolY2/dolphin-memory-lib.
+It wasn't available in PyPI so I had to add it manually.
+However I have still modified it a bit to suit my needs.
 '''
 # Various Windows structs/enums needed for operation
 NULL = 0
@@ -166,12 +167,12 @@ class Dolphin(object):
     def write_ram(self, offset, data):
         self.memory.buf[offset:offset+len(data)] = data
 
-    def read_uint8(self, addr):
+    def read_uint8(self, addr): # I added this, and it's used for single byte values.
         assert addr >= 0x80000000
         value = self.read_ram(addr - 0x80000000, 1)
         return unpack(">B", value)[0]
 
-    def read_uint16(self, addr):
+    def read_uint16(self, addr): # I added this, and it's used for 2 byte values.
         assert addr >= 0x80000000
         value = self.read_ram(addr - 0x80000000, 2)
         return unpack(">H", value)[0]
