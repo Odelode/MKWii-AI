@@ -22,7 +22,7 @@ class RainbowDQN(nn.Module):
         # Define network layers
         self.fc1 = nn.Linear(state_size, 64)
         self.fc2 = nn.Linear(64, 64)
-        self.fc_out = nn.Linear(64, action_size * n_atoms)  # Ensure fc_out is defined
+        self.fc_out = nn.Linear(64, action_size * n_atoms)
 
     def forward(self, x):
         # x should be of shape [batch_size, state_size]
