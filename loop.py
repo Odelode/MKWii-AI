@@ -1,4 +1,4 @@
-﻿from mariokart_env import MarioKartEnv
+from mariokart_env import MarioKartEnv
 from rainbow_dqn_agent import RainbowDQN
 import torch
 import numpy as np
