@@ -1,5 +1,6 @@
 from mariokart_env import MarioKartEnv
 from rainbow_dqn_agent import RainbowDQN
+from replay_buffer import ReplayBuffer
 import torch
 import numpy as np
 
@@ -7,6 +8,10 @@ env = MarioKartEnv()
 state_size = env.observation_space.shape[0]
 action_size = env.action_space.n
 model = RainbowDQN(state_size, action_size)
+buffer = ReplayBuffer(capacity=10000)
+buffer.clear()
+model.reset_weights()
+
 
 num_episodes = 1000
 epsilon = 0.1

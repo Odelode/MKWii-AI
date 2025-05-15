@@ -35,6 +35,12 @@ class RainbowDQN(nn.Module):
         x = torch.softmax(x, dim=2)
         return x
 
+    def reset_weights(self):
+        def _reset(m):
+            if hasattr(m, 'reset_parameters'):
+                m.reset_parameters()
+        self.apply(_reset)
+
     def act(self, state, epsilon):
         # Epsilon-greedy policy: with probability epsilon, choose a random action
         if random.random() < epsilon:

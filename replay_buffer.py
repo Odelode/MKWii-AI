@@ -9,6 +9,9 @@ class ReplayBuffer:
     def push(self, state, action, reward, next_state, done):
         self.buffer.append((state, action, reward, next_state, done))
 
+    def clear(self):
+        self.buffer.clear()
+
     def sample(self, batch_size):
         batch = random.sample(self.buffer, batch_size)
         states, actions, rewards, next_states, dones = map(
