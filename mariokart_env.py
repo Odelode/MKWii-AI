@@ -14,21 +14,22 @@ class MarioKartEnv(gym.Env):
     pydi.PAUSE = 0.0
     metadata = {'render.modes': ['human']}
     ACTION_KEYS = {
-        0: 'a', # left
-        1: 'd', # right
+        0: None, # wait
+        1: 'a', # left
+        2: 'd', # right
         #2: 's', # drift
-        2: 'space' # wheelie
+        3: 'space' # wheelie
     }
     def __init__(self, step_delay=0.1):
         self.window = gw.getWindowsWithTitle('Dolphin 2412 | JIT64 DC | Direct3D 11 | HLE | Mario Kart Wii (RMCP01)')[0]
         self.window.activate()
         pydi.keyUp('w', _pause=False)
         pydi.keyDown('w', _pause=False)
-        self.action_space = gym.spaces.Discrete(3) # I need 5 actions (accelerate, left, right, drift, wheelie)
+        self.action_space = gym.spaces.Discrete(len(self.ACTION_KEYS))
         self.observation_space = gym.spaces.Box(low=1.0, high=4.0, shape=(1,), dtype=np.float32)
 
         self.checkpoint_gap = 0.00005
-        self.base_checkpoint_reward = 100
+        self.base_checkpoint_reward = 200
         self.total_laps = 3
         self.finish_line = self.total_laps + 1
         self.reader = MemoryReader()
@@ -49,10 +50,10 @@ class MarioKartEnv(gym.Env):
 
     def step(self, action):
         self.window.activate()
-        pydi.keyDown('w', _pause=False)
-
         key = self.ACTION_KEYS[action]
-        if action in (0, 1):
+        if key is None:
+            time.sleep(self.step_delay)
+        elif action in (1, 2):
             pydi.keyDown(key)
             time.sleep(self.turn_hold)
             pydi.keyUp(key)
@@ -104,6 +105,7 @@ class MarioKartEnv(gym.Env):
         return obs, reward, done, {}
 
     def reset(self):
+        time.sleep(0.1)
         pydi.keyUp('w', _pause=False)
         restart_race()
 
@@ -118,6 +120,7 @@ class MarioKartEnv(gym.Env):
                 raise RuntimeError('timeout waiting for race restart')
             time.sleep(0.1)
 
+        time.sleep(0.5)
         pydi.keyDown('w', _pause=False)
 
         raw_progress = self.reader.read_value('F8', 3)
