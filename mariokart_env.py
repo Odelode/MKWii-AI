@@ -107,7 +107,7 @@ class MarioKartEnv(gym.Env):
     def reset(self):
         time.sleep(0.1)
         pydi.keyUp('w', _pause=False)
-        restart_race()
+        restart_race(self.window)
 
         start_time = time.time()
         while True:
