@@ -36,7 +36,7 @@ class MarioKartEnv(gym.Env):
         self.step_delay = step_delay
         self.turn_hold = 0.5
 
-        self.speed_threshold = 0.03
+        self.speed_threshold = 0.02
         self.no_progress_start = None
         self.max_no_progress_duration = 1
         self.grace_period_duration = 1
@@ -60,13 +60,14 @@ class MarioKartEnv(gym.Env):
         else:
             pydi.press(key, presses=1, interval=self.step_delay)
 
-        # Read
+        # Read's current progress from memory
         value = self.reader.read_value('F8', 3)
         self.current_progress = max(value, 1.0)
         now = time.time()
         obs = np.array([(self.current_progress - 1) / (self.finish_line - 1)], dtype=np.float32)
 
-        reward = 0
+        delta = self.current_progress - self.last_progress_check
+        reward = max(delta, 0) * self.base_checkpoint_reward
         done = False
 
         lap_fraction = self.current_progress - int(self.current_progress)
@@ -93,21 +94,23 @@ class MarioKartEnv(gym.Env):
 
         if now - self.grace_period_start >= self.grace_period_duration:
             elapsed = now - self.last_progress_time
-            delta = self.current_progress - self.last_progress_check
             current_speed = delta / elapsed if elapsed > 0 else 0
 
             if current_speed < self.speed_threshold:
-                reward -= 15
+                reward -= 5
                 done = True
             else:
                 self.no_progress_start = None
+
+        self.last_progress_check = self.current_progress
+        self.last_progress_time = now
         time.sleep(self.step_delay)
         return obs, reward, done, {}
 
     def reset(self):
         time.sleep(0.1)
         pydi.keyUp('w', _pause=False)
-        restart_race(self.window)
+        restart_race()
 
         start_time = time.time()
         while True:
