@@ -1,17 +1,19 @@
 ﻿# MKWii-AI
 
-This project is designed for a school assignment. It's a Python project made to teach an AI how to play Mario Kart Wii using reinforcement learning and the Dolphin Emulator.
+This project is designed for a school assignment. It's a Python project made to teach an AI how to play Mario Kart Wii using reinforcement learning (Rainbow DQN) and the Dolphin Emulator.
 
 ## Features
 
-- Reads specific in-game memory values (e.g., lap completion) from Dolphin Emulator.
+- Saves training to a file.
 - Automates race restarts using save states.
 - Intended for reinforcement learning and AI research.
 
 ## Requirements
-This is what I used, I haven't tested it on other versions:
+All the software is what I used, I haven't tested it on other versions:
+- An intermediate understanding of Python
 - Python 3.12
 - Dolphin Emulator 2412 (64-bit)
+- A legal dump of Mario Kart Wii (PAL)
 - See `requirements.txt` for dependent libraries.
 
 ## Usage
@@ -24,7 +26,11 @@ This is what I used, I haven't tested it on other versions:
     ```bash
     pip install -r requirements.txt
     ```
-3. Run the scripts as needed for your experiments.
+3. You'll have to make your own save state in Dolphin.
+
+4. When downloaded you will have to adjust to your own usage.
+
+5. Run loop.py.
 
 ## Disclaimer
 
